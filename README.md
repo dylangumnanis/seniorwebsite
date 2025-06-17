@@ -1,6 +1,6 @@
 # Senior Tech Connect
 
-A platform connecting senior citizens with student volunteers for technology and financial literacy education.
+This is a nonprofit platform connecting senior citizens with student volunteers for technology education.
 
 ## Features
 
@@ -11,6 +11,14 @@ A platform connecting senior citizens with student volunteers for technology and
 - Financial literacy resources
 - Scheduling system for sessions
 - Progress tracking and certification system
+- WordPress headless CMS integration
+- Automated GitHub Actions deployment to Bluehost
+- Modern Next.js 14 application with TypeScript and Chakra UI
+
+## Deployment Status
+✅ GitHub Actions automated deployment configured and ready!
+
+*Last updated: Testing automated deployment system*
 
 ## Tech Stack
 
