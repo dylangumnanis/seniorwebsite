@@ -24,9 +24,9 @@ In your GitHub repository, go to **Settings > Secrets and variables > Actions** 
 | `NEXT_PUBLIC_WORDPRESS_API_URL` | Your WordPress API URL | `https://info.digitaltrailheads.com/wp-json/wp/v2` |
 | `NEXTAUTH_SECRET` | NextAuth secret key | Generate with: `openssl rand -base64 32` |
 | `NEXTAUTH_URL` | Your production site URL | `https://yourdomain.com` |
-| `GITHUB_TOKEN` | GitHub Personal Access Token | Create at github.com/settings/tokens |
-| `GITHUB_REPO_OWNER` | Your GitHub username | `yourusername` |
-| `GITHUB_REPO_NAME` | Your repository name | `seniorwebsite` |
+| `PERSONAL_ACCESS_TOKEN` | GitHub Personal Access Token | Create at github.com/settings/tokens |
+| `REPO_OWNER` | Your GitHub username | `yourusername` |
+| `REPO_NAME` | Your repository name | `seniorwebsite` |
 | `WORDPRESS_WEBHOOK_SECRET` | Secret for webhook security | Generate random string |
 
 ### Finding Your Bluehost FTP Details

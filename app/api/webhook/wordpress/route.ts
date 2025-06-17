@@ -43,9 +43,9 @@ export async function POST(request: NextRequest) {
 }
 
 async function triggerGitHubRebuild() {
-  const githubToken = process.env.GITHUB_TOKEN;
-  const repoOwner = process.env.GITHUB_REPO_OWNER;
-  const repoName = process.env.GITHUB_REPO_NAME;
+  const githubToken = process.env.PERSONAL_ACCESS_TOKEN;
+  const repoOwner = process.env.REPO_OWNER;
+  const repoName = process.env.REPO_NAME;
 
   if (!githubToken || !repoOwner || !repoName) {
     console.error('Missing GitHub configuration for webhook trigger');
