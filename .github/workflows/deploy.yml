@@ -34,19 +34,14 @@ jobs:
       run: npm run build
 
     - name: Deploy to Bluehost via SFTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
         server: ${{ secrets.FTP_HOST }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        protocol: ftps
-        local-dir: ./out/
-        server-dir: ${{ secrets.FTP_SERVER_DIR }}
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          .env.local
+        local_path: './out/*'
+        remote_path: ${{ secrets.FTP_SERVER_DIR }}
+        sftp_only: true
 
     - name: Notify deployment success
       if: success()
