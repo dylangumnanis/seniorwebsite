@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Container, Heading, Text, Image, Badge, Spinner, Center, Button } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { wpApi, WordPressPost } from '../../../lib/wordpress';
+import { WordPressPost } from '../../../lib/wordpress-custom';
 import Link from 'next/link';
 
 interface BlogPostContentProps {
@@ -21,11 +21,16 @@ export default function BlogPostContent({ slug }: BlogPostContentProps) {
       
       try {
         setLoading(true);
-        const fetchedPost = await wpApi.fetchPostBySlug(slug);
-        if (fetchedPost) {
-          setPost(fetchedPost);
+        setError(null);
+        
+        // Use the local API route instead of calling WordPress directly
+        const response = await fetch(`/api/blog/${slug}`);
+        const data = await response.json();
+        
+        if (response.ok && data.success && data.data) {
+          setPost(data.data);
         } else {
-          setError('Blog post not found.');
+          setError(data.error || 'Blog post not found.');
         }
       } catch (err) {
         setError('Failed to load blog post. Please try again later.');
@@ -79,10 +84,10 @@ export default function BlogPostContent({ slug }: BlogPostContentProps) {
 
       <article>
         {/* Featured Image */}
-        {post._embedded?.['wp:featuredmedia']?.[0] && (
+        {post.featured_image_url && (
           <Image
-            src={post._embedded['wp:featuredmedia'][0].source_url}
-            alt={post._embedded['wp:featuredmedia'][0].alt_text || post.title.rendered}
+            src={post.featured_image_url}
+            alt={post.title.rendered}
             width="100%"
             height="400px"
             objectFit="cover"
@@ -100,11 +105,9 @@ export default function BlogPostContent({ slug }: BlogPostContentProps) {
               day: 'numeric' 
             })}
           </Badge>
-          {post._embedded?.author?.[0] && (
-            <Text color="gray.600" fontSize="sm">
-              By {post._embedded.author[0].name}
-            </Text>
-          )}
+          <Text color="gray.600" fontSize="sm">
+            By Author
+          </Text>
         </Box>
 
         {/* Title */}

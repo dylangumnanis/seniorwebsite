@@ -18,6 +18,7 @@ import {
   FaVideo,
   FaComments,
   FaBook,
+  FaEdit,
   FaCog,
 } from 'react-icons/fa'
 import { usePathname } from 'next/navigation'
@@ -78,6 +79,7 @@ export default function DashboardLayout({
     { icon: FaVideo, label: 'Webinars', href: '/dashboard/webinars' },
     { icon: FaComments, label: 'Forum', href: '/dashboard/forum' },
     { icon: FaBook, label: 'Resources', href: '/dashboard/resources' },
+    { icon: FaEdit, label: 'Content', href: '/dashboard/content' },
     { icon: FaCog, label: 'Settings', href: '/dashboard/settings' },
   ]
 

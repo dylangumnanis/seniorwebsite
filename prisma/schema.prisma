@@ -80,7 +80,7 @@ model VolunteerProfile {
   availability      Json?
   totalHours        Int      @default(0)
   rating            Float    @default(0)
-  completedSessions Session[]
+  completedSessions TutoringSession[]
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -91,7 +91,7 @@ model SeniorProfile {
   user          User     @relation(fields: [userId], references: [id])
   interests     String[]
   learningGoals String[]
-  sessions      Session[]
+  sessions      TutoringSession[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -132,7 +132,7 @@ model ForumComment {
   updatedAt DateTime @updatedAt
 }
 
-model Session {
+model TutoringSession {
   id              String   @id @default(cuid())
   volunteerId     String
   volunteer       VolunteerProfile @relation(fields: [volunteerId], references: [id])

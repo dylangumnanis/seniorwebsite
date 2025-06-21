@@ -1,127 +1,147 @@
-# Bluehost Deployment Guide for Senior Tech Connect
+# Deployment Guide for Senior Tech Connect
 
 ## Overview
-This guide will help you deploy your Senior Tech Connect website to Bluehost hosting.
+This guide will help you deploy your Next.js blog application online so your cofounder can:
+- Edit posts in WordPress admin
+- View formatted blog posts online (not localhost)
+- Keep bidirectional sync working
 
-## Prerequisites
-- Bluehost hosting account
-- FTP client (FileZilla recommended) or access to Bluehost File Manager
-- Your website files (built using `npm run build`)
+## Recommended: Vercel Deployment
 
-## Step 1: Build Your Website for Production
+### Prerequisites
+1. GitHub repository with your code
+2. Environment variables from your `.env.local` file
 
-1. Open your terminal/command prompt in the project directory
-2. Run the build command:
-   ```bash
-   npm run build
-   ```
-3. This creates an `out` folder with all your static files
+### Step 1: Prepare for Deployment
 
-## Step 2: Prepare Files for Upload
+#### Update next.config.js for production
+Add these optimizations to your `next.config.js`:
 
-After building, you'll find these important folders/files:
-- `out/` - Contains all your website files
-- `out/index.html` - Your homepage
-- `out/_next/` - Contains CSS, JavaScript, and other assets
-- `out/about/` - About page
-- `out/login/` - Login page
-- `out/register/` - Registration page
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    unoptimized: true,
+    domains: ['info.digitaltrailheads.com'] // Add your WordPress domain
+  },
+  env: {
+    CUSTOM_NAME: process.env.CUSTOM_NAME,
+  }
+}
 
-## Step 3: Upload to Bluehost
-
-### Option A: Using Bluehost File Manager
-1. Log into your Bluehost control panel
-2. Go to "File Manager"
-3. Navigate to `public_html` folder (this is your website's root)
-4. Delete any existing files (like default index.html)
-5. Upload all contents from the `out` folder to `public_html`
-
-### Option B: Using FTP Client (FileZilla)
-1. Download and install FileZilla
-2. Get your FTP credentials from Bluehost:
-   - Host: Your domain name or server IP
-   - Username: Your cPanel username
-   - Password: Your cPanel password
-   - Port: 21
-3. Connect to your server
-4. Navigate to `public_html` folder
-5. Upload all contents from the `out` folder
-
-## Step 4: Configure Domain
-
-1. In Bluehost control panel, go to "Domains"
-2. Make sure your domain points to the `public_html` folder
-3. If using a subdomain, create it and point it to the correct folder
-
-## Step 5: Test Your Website
-
-1. Visit your domain in a web browser
-2. Test all pages:
-   - Homepage (/)
-   - About page (/about/)
-   - Login page (/login/)
-   - Register page (/register/)
-3. Check that all images and styling load correctly
-
-## Important Notes
-
-### Static Website Limitations
-Since this is now a static website, some features are limited:
-- **Authentication**: Currently shows demo messages. For real authentication, integrate with:
-  - Auth0
-  - Firebase Authentication
-  - Supabase Auth
-- **Database**: No server-side database. Consider:
-  - Firebase Firestore
-  - Supabase
-  - Airtable
-- **Contact Forms**: Use services like:
-  - Formspree
-  - Netlify Forms
-  - EmailJS
-
-### File Structure on Server
+module.exports = nextConfig
 ```
-public_html/
-├── index.html (Homepage)
-├── about/
-│   └── index.html
-├── login/
-│   └── index.html
-├── register/
-│   └── index.html
-├── _next/ (CSS, JS, and other assets)
-└── images and other static files
+
+#### Environment Variables Needed
+Make sure you have these in your `.env.local` (you'll add them to Vercel):
+- `WORDPRESS_API_URL`
+- `WORDPRESS_API_KEY`
+- `NEXTAUTH_SECRET`
+- `NEXTAUTH_URL` (will be your Vercel domain)
+- Any database URLs if using Prisma
+
+### Step 2: Deploy to Vercel
+
+1. **Sign up/Login to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign up with GitHub
+
+2. **Import Your Project**
+   - Click "New Project"
+   - Import from GitHub
+   - Select your repository
+
+3. **Configure Environment Variables**
+   - In project settings, add all your environment variables
+   - Important: Set `NEXTAUTH_URL` to your Vercel domain (e.g., `https://your-app.vercel.app`)
+
+4. **Deploy**
+   - Click "Deploy"
+   - Wait for deployment to complete
+   - Get your live URL
+
+### Step 3: Update WordPress Webhook (if needed)
+
+If you're using webhooks, update your WordPress plugin to also trigger sync on your live site:
+
+```php
+// In your WordPress plugin
+$endpoints = [
+    'http://localhost:3000/api/webhook/wordpress', // Local
+    'https://your-app.vercel.app/api/webhook/wordpress' // Production
+];
 ```
+
+## Alternative: Netlify Deployment
+
+### Steps:
+1. Push to GitHub
+2. Connect Netlify to GitHub
+3. Build command: `npm run build`
+4. Publish directory: `.next`
+5. Add environment variables
+
+## Post-Deployment Workflow
+
+Your cofounder can now:
+
+1. **Edit Posts**: Go to WordPress admin and edit posts
+2. **View Posts**: Visit your live site at `https://your-app.vercel.app/blog`
+3. **Sync**: Posts will automatically sync between WordPress and your live site
+
+## Sync Considerations
+
+### Automatic Sync Options:
+1. **Webhook-based**: WordPress triggers sync when posts change
+2. **Scheduled**: Set up cron job to sync every X minutes
+3. **Manual**: API endpoints for manual sync
+
+### Recommended: Webhook + Fallback
+- Primary: WordPress webhooks trigger immediate sync
+- Fallback: Scheduled sync every 15 minutes
+
+## Testing Deployment
+
+After deployment:
+1. Visit `https://your-app.vercel.app/blog`
+2. Test that posts load from WordPress
+3. Edit a post in WordPress admin
+4. Verify changes appear on live site
+5. Test bidirectional sync if editing locally
 
 ## Troubleshooting
 
 ### Common Issues:
+- **Environment variables**: Make sure all are set in Vercel
+- **API endpoints**: Ensure WordPress API is accessible from internet
+- **CORS**: May need to configure WordPress CORS for production domain
+- **Build errors**: Check build logs in Vercel dashboard
 
-1. **404 Errors**: Make sure all files are in the correct directories
-2. **Missing Styles**: Ensure the `_next` folder is uploaded completely
-3. **Images Not Loading**: Check that image files are in the correct paths
-4. **Blank Pages**: Check browser console for JavaScript errors
+### CORS Configuration
+Add this to your WordPress functions.php if needed:
 
-### Performance Optimization:
-- Enable Gzip compression in Bluehost
-- Use Bluehost's CDN if available
-- Optimize images before uploading
+```php
+function add_cors_http_header(){
+    header("Access-Control-Allow-Origin: https://your-app.vercel.app");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+}
+add_action('init','add_cors_http_header');
+```
 
-## Future Enhancements
+## Next Steps
 
-To add dynamic functionality later:
-1. **Contact Form**: Integrate with Formspree or EmailJS
-2. **User Authentication**: Add Auth0 or Firebase Auth
-3. **Database**: Use Firebase or Supabase for user data
-4. **Blog/CMS**: Consider headless CMS like Strapi or Contentful
+1. Choose deployment platform (Vercel recommended)
+2. Set up deployment
+3. Configure environment variables
+4. Test with cofounder
+5. Set up any necessary webhooks/sync automation
 
-## Support
+## Benefits for Your Cofounder
 
-If you encounter issues:
-1. Check Bluehost documentation
-2. Contact Bluehost support
-3. Verify all files are uploaded correctly
-4. Check browser developer tools for errors
-
-Your Senior Tech Connect website is now ready for the world! 🎉 
+✅ Edit posts in familiar WordPress admin  
+✅ View beautifully formatted posts online  
+✅ No need to run localhost  
+✅ Automatic sync keeps everything updated  
+✅ Can share links to specific posts  
+✅ Mobile-friendly viewing 

@@ -5,30 +5,35 @@ import BlogPostContent from './BlogPostContent';
 // Generate static params for blog posts
 export async function generateStaticParams() {
   try {
-    // Fetch posts from WordPress API to get actual slugs
-    const WORDPRESS_API_URL = 'https://info.digitaltrailheads.com/wp-json/wp/v2';
-    const response = await fetch(`${WORDPRESS_API_URL}/posts?per_page=100`);
+    // Fetch posts from your custom WordPress API
+    const response = await fetch('https://info.digitaltrailheads.com/wp-json/dt-sync/v1/posts?per_page=100', {
+      headers: {
+        'X-API-Key': 'dt-sync-ca08675eb5ec2c49f2cd06e139be7bd0'
+      }
+    });
     
     if (!response.ok) {
-      // Fallback to demo slugs if WordPress is not available
+      // Fallback to known slugs if WordPress is not available
       return [
-        { slug: 'welcome-to-senior-tech-connect' },
-        { slug: 'essential-technology-skills-seniors' },
-        { slug: 'success-story-margaret-video-calling' },
+        { slug: 'hello-world' },
+        { slug: 'welcome-to-our-blog' },
+        { slug: 'test-new-post-june-19th' },
       ];
     }
     
-    const posts = await response.json();
+    const data = await response.json();
+    const posts = data.success ? data.data : data;
+    
     return posts.map((post: any) => ({
       slug: post.slug
     }));
   } catch (error) {
     console.warn('Error generating static params, using fallback:', error);
-    // Fallback to demo slugs
+    // Fallback to known slugs from your WordPress
     return [
-      { slug: 'welcome-to-senior-tech-connect' },
-      { slug: 'essential-technology-skills-seniors' },
-      { slug: 'success-story-margaret-video-calling' },
+      { slug: 'hello-world' },
+      { slug: 'welcome-to-our-blog' },
+      { slug: 'test-new-post-june-19th' },
     ];
   }
 }
