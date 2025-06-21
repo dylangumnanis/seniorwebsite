@@ -1,0 +1,29 @@
+# Next.js Blog Subdirectory Configuration
+RewriteEngine On
+
+# Set proper MIME types
+AddType application/javascript .js
+AddType text/css .css
+AddType application/json .json
+
+# Allow access to next-static directory
+RewriteRule ^next-static/ - [L]
+
+# Handle blog post routing within this subdirectory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/?$ /$1/index.html [L]
+
+# Set headers for static assets
+<FilesMatch "\.(js|css|json|svg|webp|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot)$">
+    <IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault "access plus 1 year"
+    </IfModule>
+    Header set Cache-Control "public, immutable, max-age=31536000"
+</FilesMatch>
+
+# Basic security
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options nosniff
+</IfModule> 

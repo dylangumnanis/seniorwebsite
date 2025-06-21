@@ -1,0 +1,37 @@
+# Next.js Static Site - Bluehost Compatible Configuration
+RewriteEngine On
+
+# Set proper MIME types
+AddType application/javascript .js
+AddType text/css .css
+AddType application/json .json
+
+# Allow access to next-static directory
+<IfModule mod_rewrite.c>
+    RewriteRule ^next-static/ - [L]
+</IfModule>
+
+# Redirect _next to next-static with 301 redirect
+<IfModule mod_rewrite.c>
+    RewriteRule ^_next/(.*)$ /next-static/$1 [R=301,L]
+</IfModule>
+
+# Handle Next.js static routing - simplified
+<IfModule mod_rewrite.c>
+    # Don't rewrite files or directories that exist
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Handle blog directory routing
+    RewriteRule ^blog$ /blog/ [R=301,L]
+    RewriteRule ^blog/$ /blog/index.html [L]
+    RewriteRule ^blog/([^/]+)/?$ /blog/$1/index.html [L]
+</IfModule>
+
+# Basic security headers (simplified for compatibility)
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options nosniff
+</IfModule>
+
+# Error handling
+ErrorDocument 404 /404.html 
