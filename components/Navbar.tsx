@@ -164,6 +164,10 @@ export default function Navbar() {
             <NavLink href="/contact">Contact</NavLink>
             <NavLink href="/forum">Forum</NavLink>
             
+            {/* Testing Links */}
+            <NavLink href="/senior">Senior Dashboard</NavLink>
+            <NavLink href="/volunteer">Volunteer Dashboard</NavLink>
+            
             <Button
               as={Link}
               href="/donate"
@@ -263,6 +267,10 @@ export default function Navbar() {
               <NavLink href="/about">About Us</NavLink>
               <NavLink href="/contact">Contact</NavLink>
               <NavLink href="/forum">Forum</NavLink>
+              
+              {/* Testing Links */}
+              <NavLink href="/senior">Senior Dashboard</NavLink>
+              <NavLink href="/volunteer">Volunteer Dashboard</NavLink>
               
               <Button
                 as={Link}
