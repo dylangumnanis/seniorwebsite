@@ -59,7 +59,7 @@ export default function Navigation() {
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
             <NextLink href="/" passHref>
-              <Link>Senior Tech Connect</Link>
+              <Link>Roots and Wings</Link>
             </NextLink>
           </Text>
 

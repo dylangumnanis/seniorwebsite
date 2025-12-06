@@ -8,8 +8,8 @@ import { Box } from '@chakra-ui/react'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Senior Tech Connect - Bridging the Digital Divide',
-  description: 'Connecting senior citizens with student volunteers for technology and financial literacy education.',
+  title: 'Roots and Wings - Wisdom Grounded, Futures Taking Flight',
+  description: 'Roots and Wings connects senior citizens, the roots, with youth volunteers, the wings, for compassionate technology and financial literacy support.',
 }
 
 export default function RootLayout({

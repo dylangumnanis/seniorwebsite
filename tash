@@ -1,0 +1,10 @@
+[33m2a6fe4c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32mvercel-deploy[m[33m)[m Remove files with hardcoded tokens for security
+[33meb32bb0[m Prepare for Vercel deployment - Fixed blog loading, dashboard, API routes, and added deployment configs
+[33m5cdc8f7[m[33m ([m[1;31morigin/main[m[33m)[m Add complete WordPress webhook solution guide
+[33m82baecc[m Fix: Use sebastianpopp/ftp-action with updated credentials
+[33ma0a3f94[m Fix: Switch to SFTP-Deploy-Action for Bluehost compatibility
+[33mc5132f7[m Fix: Use FTPS protocol for secure FTP connection
+[33m706796c[m Fix: Remove conflicting API route for static export compatibility
+[33me676b4a[m Trigger deployment with corrected FTP path
+[33m982492a[m Test: Trigger GitHub Actions deployment
+[33mab041f4[m Fix: Update secret name from GITHUB_TOKEN to PERSONAL_ACCESS_TOKEN

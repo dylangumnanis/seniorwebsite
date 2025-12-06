@@ -10,6 +10,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
@@ -17,10 +18,14 @@ import {
   Container,
   Collapse,
   VStack,
+  Avatar,
+  Badge,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import { FaHeart, FaUsers, FaGraduationCap } from 'react-icons/fa'
+import { FaHeart, FaUsers, FaGraduationCap, FaCog, FaSignOutAlt, FaTachometerAlt, FaCalendarAlt, FaQuestionCircle } from 'react-icons/fa'
 import Link from 'next/link'
+import { useSession, signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 interface NavLinkProps {
   children: React.ReactNode
@@ -50,8 +55,25 @@ const NavLink = ({ children, href }: NavLinkProps) => (
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { data: session, status } = useSession()
+  const router = useRouter()
   const bgColor = useColorModeValue('white', 'gray.800')
   const borderColor = useColorModeValue('gray.200', 'gray.700')
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false })
+    router.push('/')
+  }
+
+  const getDashboardLink = () => {
+    if (!session?.user?.role) return '/dashboard'
+    switch (session.user.role) {
+      case 'SENIOR': return '/senior/dashboard'
+      case 'VOLUNTEER': return '/volunteer/dashboard'
+      case 'ADMIN': return '/dashboard'
+      default: return '/dashboard'
+    }
+  }
 
   return (
     <Box
@@ -88,14 +110,14 @@ export default function Navbar() {
                   color={useColorModeValue('gray.800', 'white')}
                   lineHeight="1"
                 >
-                  Senior Tech Connect
+                  Roots and Wings
                 </Text>
                 <Text
                   fontSize="xs"
                   color={useColorModeValue('gray.500', 'gray.400')}
                   lineHeight="1"
                 >
-                  bridging generations
+                  rooted in wisdom, soaring together
                 </Text>
               </VStack>
             </HStack>
@@ -181,41 +203,117 @@ export default function Navbar() {
             </Button>
           </HStack>
 
-          {/* Auth Buttons */}
+          {/* Auth Buttons / User Menu */}
           <HStack spacing={4} display={{ base: 'none', lg: 'flex' }}>
-            <Button
-              as={Link}
-              href="/login"
-              variant="ghost"
-              size="md"
-              fontWeight="500"
-              color={useColorModeValue('gray.700', 'gray.200')}
-              _hover={{
-                color: useColorModeValue('orange.600', 'orange.300'),
-              }}
-            >
-              Log In
-            </Button>
-            <Button
-              as={Link}
-              href="/register"
-              bg="orange.500"
-              color="white"
-              size="md"
-              fontWeight="600"
-              rounded="full"
-              px={6}
-              _hover={{
-                bg: 'orange.600',
-                transform: 'translateY(-1px)',
-              }}
-              _active={{
-                transform: 'translateY(0)',
-              }}
-              transition="all 0.2s"
-            >
-              Sign Up
-            </Button>
+            {status === 'loading' ? (
+              <Text color="gray.500">Loading...</Text>
+            ) : session ? (
+              <Menu>
+                <MenuButton>
+                  <HStack spacing={3} cursor="pointer">
+                    <Avatar 
+                      size="sm" 
+                      name={session.user?.name || 'User'} 
+                      bg="orange.500"
+                    />
+                    <VStack spacing={0} align="start">
+                      <Text 
+                        fontSize="sm" 
+                        fontWeight="600"
+                        color={useColorModeValue('gray.800', 'white')}
+                      >
+                        {session.user?.name || 'User'}
+                      </Text>
+                      <Badge 
+                        size="sm" 
+                        colorScheme={
+                          session.user?.role === 'SENIOR' ? 'blue' : 
+                          session.user?.role === 'VOLUNTEER' ? 'green' : 'purple'
+                        }
+                        fontSize="xs"
+                      >
+                        {session.user?.role?.toLowerCase()}
+                      </Badge>
+                    </VStack>
+                    <ChevronDownIcon />
+                  </HStack>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem 
+                    as={Link} 
+                    href={getDashboardLink()}
+                    icon={<FaTachometerAlt />}
+                  >
+                    Dashboard
+                  </MenuItem>
+                  <MenuItem 
+                    as={Link} 
+                    href="/senior/request-session"
+                    icon={<FaCalendarAlt />}
+                  >
+                    {session.user?.role === 'SENIOR' ? 'Request Session' : 'Schedule'}
+                  </MenuItem>
+                  <MenuItem 
+                    as={Link} 
+                    href="/contact"
+                    icon={<FaQuestionCircle />}
+                  >
+                    Support
+                  </MenuItem>
+                  <MenuDivider />
+                  <MenuItem 
+                    as={Link} 
+                    href="/settings"
+                    icon={<FaCog />}
+                  >
+                    Settings
+                  </MenuItem>
+                  <MenuItem 
+                    onClick={handleSignOut}
+                    icon={<FaSignOutAlt />}
+                    color="red.500"
+                  >
+                    Sign Out
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              <>
+                <Button
+                  as={Link}
+                  href="/login"
+                  variant="ghost"
+                  size="md"
+                  fontWeight="500"
+                  color={useColorModeValue('gray.700', 'gray.200')}
+                  _hover={{
+                    color: useColorModeValue('orange.600', 'orange.300'),
+                  }}
+                >
+                  Log In
+                </Button>
+                <Button
+                  as={Link}
+                  href="/register"
+                  bg="orange.500"
+                  color="white"
+                  size="md"
+                  fontWeight="600"
+                  rounded="full"
+                  px={6}
+                  _hover={{
+                    bg: 'orange.600',
+                    transform: 'translateY(-1px)',
+                  }}
+                  _active={{
+                    transform: 'translateY(0)',
+                  }}
+                  transition="all 0.2s"
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </HStack>
 
           {/* Mobile menu button */}

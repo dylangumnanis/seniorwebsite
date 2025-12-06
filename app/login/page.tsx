@@ -17,24 +17,48 @@ import {
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { signIn, getSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setMessage('')
 
-    // For static hosting, we'll show a demo message
-    // In a real implementation, you'd integrate with a third-party auth service
-    setTimeout(() => {
-      setMessage('Demo mode: Authentication would be handled by a third-party service like Auth0 or Firebase.')
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false
+      })
+
+      if (result?.error) {
+        setMessage('Invalid email or password')
+      } else {
+        // Get the session to determine user role and redirect
+        const session = await getSession()
+        if (session?.user?.role === 'SENIOR') {
+          router.push('/senior/dashboard')
+        } else if (session?.user?.role === 'VOLUNTEER') {
+          router.push('/volunteer/dashboard')
+        } else if (session?.user?.role === 'ADMIN') {
+          router.push('/dashboard')
+        } else {
+          router.push('/')
+        }
+      }
+    } catch (error) {
+      setMessage('An error occurred. Please try again.')
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   return (
@@ -43,7 +67,7 @@ export default function LoginPage() {
         <VStack spacing={4} textAlign="center">
           <Heading size="xl">Welcome Back</Heading>
           <Text color={useColorModeValue('gray.600', 'gray.400')}>
-            Sign in to your Senior Tech Connect account
+            Sign in to your Roots and Wings account
           </Text>
         </VStack>
 

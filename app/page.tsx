@@ -50,7 +50,7 @@ export default function Home() {
       name: 'Sarah Johnson',
       role: 'Senior Citizen',
       image: '/testimonials/sarah.jpg',
-      quote: "Thanks to Senior Tech Connect, I can now video chat with my grandchildren and manage my finances online with confidence.",
+      quote: "Thanks to Roots and Wings, I can now video chat with my grandchildren and manage my finances online with confidence.",
     },
     {
       name: 'Michael Chen',
@@ -118,7 +118,7 @@ export default function Home() {
                   fontWeight="400"
                   lineHeight="1.5"
                 >
-                  Connect with caring student volunteers for personalized tech support
+                  At Roots and Wings, seniors share the roots of wisdom while youth volunteers bring the wings that make personalized tech support take flight.
                 </Text>
               </VStack>
               

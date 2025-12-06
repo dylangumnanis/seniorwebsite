@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-console.log('🚀 Building Senior Tech Connect for Bluehost deployment...\n');
+console.log('🚀 Building Roots and Wings for Bluehost deployment...\n');
 
 // Cross-platform copy function
 function copyDirectory(src, dest) {

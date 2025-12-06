@@ -49,11 +49,36 @@ export default function RegisterPage() {
       return
     }
 
-    // For static hosting, we'll show a demo message
-    setTimeout(() => {
-      setMessage('Demo mode: Registration would be handled by a third-party service like Auth0 or Firebase.')
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setMessage('Registration successful! You can now log in.')
+        // Reset form
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          role: '',
+          password: '',
+          confirmPassword: ''
+        })
+      } else {
+        setMessage(data.error || 'Registration failed. Please try again.')
+      }
+    } catch (error) {
+      setMessage('An error occurred. Please try again.')
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   return (
@@ -62,7 +87,7 @@ export default function RegisterPage() {
         <VStack spacing={4} textAlign="center">
           <Heading size="xl">Join Our Community</Heading>
           <Text color={useColorModeValue('gray.600', 'gray.400')}>
-            Create your Senior Tech Connect account
+            Create your Roots and Wings account
           </Text>
         </VStack>
 
