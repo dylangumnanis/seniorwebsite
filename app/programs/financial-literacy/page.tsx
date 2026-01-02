@@ -240,7 +240,7 @@ export default function FinancialLiteracyPage() {
                   <Icon as={FaUsers} w={10} h={10} color="blue.500" />
                   <Box>
                     <Text fontSize="2xl" fontWeight="bold" color={useColorModeValue('gray.800', 'white')}>
-                      300+
+                      40+
                     </Text>
                     <Text color={textColor}>Seniors Protected</Text>
                   </Box>

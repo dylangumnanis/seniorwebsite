@@ -18,6 +18,7 @@ import {
   Divider,
   Avatar,
   AvatarGroup,
+  Image,
 } from '@chakra-ui/react'
 import { 
   FaUsers, 
@@ -25,14 +26,16 @@ import {
   FaGraduationCap, 
   FaHeart,
   FaClock,
-  FaAward,
-  FaLightbulb,
   FaRocket,
   FaQuoteLeft,
-  FaStar,
   FaArrowRight,
   FaSeedling,
-  FaFeatherAlt
+  FaFeatherAlt,
+  FaCode,
+  FaLinkedin,
+  FaEnvelope,
+  FaInstagram,
+  FaShareAlt
 } from 'react-icons/fa'
 import Link from 'next/link'
 
@@ -43,21 +46,21 @@ export default function AboutPage() {
 
   const journey = [
     {
-      year: '2023',
+      year: '2024',
       title: 'The Beginning',
       description: 'Roots and Wings was born from a simple observation: seniors needed tech help, and students needed meaningful volunteer opportunities.',
       icon: FaSeedling,
     },
     {
-      year: '2023',
+      year: '2024',
       title: 'First Connections',
       description: 'Our first 50 matches created lasting friendships and proved that intergenerational learning works.',
       icon: FaHandshake,
     },
     {
-      year: '2024',
+      year: '2025',
       title: 'Growing Wings',
-      description: 'Expanded to 500+ seniors helped, with programs in technology literacy, financial literacy, and live webinars.',
+      description: 'Expanded to 70+ seniors helped, with programs in technology literacy, financial literacy, and live webinars.',
       icon: FaRocket,
     },
     {
@@ -65,37 +68,6 @@ export default function AboutPage() {
       title: 'Soaring Together',
       description: 'A thriving community of learners and volunteers, continuously growing and making a real difference.',
       icon: FaFeatherAlt,
-    },
-  ]
-
-  const values = [
-    {
-      icon: FaUsers,
-      title: 'Community First',
-      description: 'We believe in the power of connection. Every interaction builds a stronger, more supportive community.',
-      color: 'pink',
-      position: 'left',
-    },
-    {
-      icon: FaGraduationCap,
-      title: 'Lifelong Learning',
-      description: 'Education doesn\'t have an expiration date. We celebrate curiosity and growth at every age.',
-      color: 'orange',
-      position: 'right',
-    },
-    {
-      icon: FaHeart,
-      title: 'Compassionate Support',
-      description: 'We meet people where they are, with patience, understanding, and genuine care for each individual journey.',
-      color: 'red',
-      position: 'left',
-    },
-    {
-      icon: FaHandshake,
-      title: 'Mutual Benefit',
-      description: 'Everyone gains something valuable - seniors learn skills, volunteers gain perspective, and both form meaningful connections.',
-      color: 'blue',
-      position: 'right',
     },
   ]
 
@@ -237,6 +209,274 @@ export default function AboutPage() {
         </Container>
       </Box>
 
+      {/* Meet the Team */}
+      <Box py={20} bg={bgColor}>
+        <Container maxW="container.xl">
+          <VStack spacing={12}>
+            <VStack spacing={4} textAlign="center" maxW="2xl" mx="auto">
+              <Badge colorScheme="orange" px={4} py={2} rounded="full" fontSize="md">
+                The People Behind the Mission
+              </Badge>
+              <Heading size="2xl" color={useColorModeValue('gray.800', 'white')}>
+                Meet the Team
+              </Heading>
+              <Text fontSize="lg" color={textColor}>
+                Dedicated individuals working to bridge the digital divide.
+              </Text>
+            </VStack>
+
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8} w="full">
+              {/* Dylan Gumnani */}
+              <Card
+                bg={cardBg}
+                shadow="xl"
+                overflow="hidden"
+                _hover={{ transform: 'translateY(-4px)', shadow: '2xl' }}
+                transition="all 0.3s"
+              >
+                <Flex direction="column">
+                  {/* Photo Section */}
+                  <Box
+                    w="full"
+                    h="280px"
+                    bg={useColorModeValue('orange.100', 'gray.600')}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    position="relative"
+                    overflow="hidden"
+                  >
+                    <Image
+                      src="/team/dylan.jpg"
+                      alt="Dylan Gumnani"
+                      objectFit="cover"
+                      w="full"
+                      h="full"
+                      fallback={
+                        <VStack spacing={3}>
+                          <Avatar 
+                            size="2xl" 
+                            name="Dylan Gumnani" 
+                            bg="orange.500"
+                            color="white"
+                          />
+                          <Text fontSize="xs" color={textColor}>
+                            Photo coming soon
+                          </Text>
+                        </VStack>
+                      }
+                    />
+                  </Box>
+                  
+                  {/* Info Section */}
+                  <CardBody p={6}>
+                    <VStack align="start" spacing={3}>
+                      <VStack align="start" spacing={1}>
+                        <Heading size="lg" color={useColorModeValue('gray.800', 'white')}>
+                          Dylan Gumnani
+                        </Heading>
+                        <HStack spacing={2}>
+                          <Badge colorScheme="orange" fontSize="xs">
+                            Founder
+                          </Badge>
+                          <Badge colorScheme="purple" fontSize="xs">
+                            Developer
+                          </Badge>
+                        </HStack>
+                      </VStack>
+                      
+                      <Text color={textColor} fontSize="sm" lineHeight="1.7">
+                        Avid tech-enthusiast and amateur break-dancer, Dylan discovered his passion 
+                        for helping others growing up near community centers in his home state of New Jersey.
+                      </Text>
+
+                      <HStack spacing={3} pt={1}>
+                        <Icon as={FaCode} color="orange.500" w={4} h={4} />
+                        <Text fontSize="xs" color={textColor}>
+                          Building technology that connects generations
+                        </Text>
+                      </HStack>
+                    </VStack>
+                  </CardBody>
+                </Flex>
+              </Card>
+
+              {/* Sarah Vares */}
+              <Card
+                bg={cardBg}
+                shadow="xl"
+                overflow="hidden"
+                _hover={{ transform: 'translateY(-4px)', shadow: '2xl' }}
+                transition="all 0.3s"
+              >
+                <Flex direction="column">
+                  {/* Photo Section */}
+                  <Box
+                    w="full"
+                    h="280px"
+                    bg={useColorModeValue('pink.100', 'gray.600')}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    position="relative"
+                    overflow="hidden"
+                  >
+                    <Image
+                      src="/team/sarah.jpg"
+                      alt="Sarah Vares"
+                      objectFit="cover"
+                      w="full"
+                      h="full"
+                      fallback={
+                        <VStack spacing={3}>
+                          <Avatar 
+                            size="2xl" 
+                            name="Sarah Vares" 
+                            bg="pink.500"
+                            color="white"
+                          />
+                          <Text fontSize="xs" color={textColor}>
+                            Photo coming soon
+                          </Text>
+                        </VStack>
+                      }
+                    />
+                  </Box>
+                  
+                  {/* Info Section */}
+                  <CardBody p={6}>
+                    <VStack align="start" spacing={3}>
+                      <VStack align="start" spacing={1}>
+                        <Heading size="lg" color={useColorModeValue('gray.800', 'white')}>
+                          Sarah Vares
+                        </Heading>
+                        <HStack spacing={2}>
+                          <Badge colorScheme="pink" fontSize="xs">
+                            Social Media Manager
+                          </Badge>
+                        </HStack>
+                      </VStack>
+                      
+                      <Text color={textColor} fontSize="sm" lineHeight="1.7">
+                        Passionate about storytelling and community engagement, Sarah helps spread 
+                        our mission and connect with supporters across social platforms.
+                      </Text>
+
+                      <HStack spacing={3} pt={1}>
+                        <Icon as={FaInstagram} color="pink.500" w={4} h={4} />
+                        <Text fontSize="xs" color={textColor}>
+                          Sharing stories that inspire action
+                        </Text>
+                      </HStack>
+                    </VStack>
+                  </CardBody>
+                </Flex>
+              </Card>
+
+              {/* Zofia Jankowska */}
+              <Card
+                bg={cardBg}
+                shadow="xl"
+                overflow="hidden"
+                _hover={{ transform: 'translateY(-4px)', shadow: '2xl' }}
+                transition="all 0.3s"
+              >
+                <Flex direction="column">
+                  {/* Photo Section */}
+                  <Box
+                    w="full"
+                    h="280px"
+                    bg={useColorModeValue('purple.100', 'gray.600')}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    position="relative"
+                    overflow="hidden"
+                  >
+                    <Image
+                      src="/team/zofia.jpg"
+                      alt="Zofia Jankowska"
+                      objectFit="cover"
+                      w="full"
+                      h="full"
+                      fallback={
+                        <VStack spacing={3}>
+                          <Avatar 
+                            size="2xl" 
+                            name="Zofia Jankowska" 
+                            bg="purple.500"
+                            color="white"
+                          />
+                          <Text fontSize="xs" color={textColor}>
+                            Photo coming soon
+                          </Text>
+                        </VStack>
+                      }
+                    />
+                  </Box>
+                  
+                  {/* Info Section */}
+                  <CardBody p={6}>
+                    <VStack align="start" spacing={3}>
+                      <VStack align="start" spacing={1}>
+                        <Heading size="lg" color={useColorModeValue('gray.800', 'white')}>
+                          Zofia Jankowska
+                        </Heading>
+                        <HStack spacing={2}>
+                          <Badge colorScheme="purple" fontSize="xs">
+                            Social Media Manager
+                          </Badge>
+                        </HStack>
+                      </VStack>
+                      
+                      <Text color={textColor} fontSize="sm" lineHeight="1.7">
+                        Creative and dedicated, Zofia brings fresh ideas to our online presence 
+                        and helps amplify the voices of seniors and volunteers alike.
+                      </Text>
+
+                      <HStack spacing={3} pt={1}>
+                        <Icon as={FaShareAlt} color="purple.500" w={4} h={4} />
+                        <Text fontSize="xs" color={textColor}>
+                          Amplifying community voices online
+                        </Text>
+                      </HStack>
+                    </VStack>
+                  </CardBody>
+                </Flex>
+              </Card>
+            </SimpleGrid>
+
+            {/* Join the Team CTA */}
+            <Box
+              bg={useColorModeValue('orange.50', 'gray.700')}
+              p={8}
+              rounded="xl"
+              textAlign="center"
+              maxW="2xl"
+              w="full"
+            >
+              <VStack spacing={4}>
+                <Heading size="md" color={useColorModeValue('gray.800', 'white')}>
+                  Want to Join Our Team?
+                </Heading>
+                <Text color={textColor}>
+                  We're always looking for passionate individuals to help grow our mission.
+                </Text>
+                <Button
+                  as={Link}
+                  href="/contact"
+                  colorScheme="orange"
+                  rounded="full"
+                  px={8}
+                >
+                  Get in Touch
+                </Button>
+              </VStack>
+            </Box>
+          </VStack>
+        </Container>
+      </Box>
+
       {/* Our Journey - Timeline Style */}
       <Box py={20} bg={bgColor} position="relative">
         <Container maxW="container.xl">
@@ -251,166 +491,98 @@ export default function AboutPage() {
             </VStack>
 
             <Box w="full" position="relative">
-              {/* Timeline line */}
-              <Box
-                position="absolute"
-                left={{ base: '20px', md: '50%' }}
-                top="0"
-                bottom="0"
-                width="3px"
-                bg={useColorModeValue('gray.200', 'gray.600')}
-                display={{ base: 'block', md: 'none' }}
-              />
+              {/* Timeline line - Desktop only, centered */}
               <Box
                 position="absolute"
                 left="50%"
                 top="0"
                 bottom="0"
-                width="3px"
-                bg={useColorModeValue('gray.200', 'gray.600')}
+                width="4px"
+                bg={useColorModeValue('pink.200', 'pink.800')}
                 display={{ base: 'none', md: 'block' }}
                 transform="translateX(-50%)"
+                rounded="full"
               />
 
-              <VStack spacing={12} align="stretch">
+              <VStack spacing={8} align="stretch">
                 {journey.map((step, index) => (
                   <Flex
                     key={index}
-                    direction={{ base: 'row', md: index % 2 === 0 ? 'row' : 'row-reverse' }}
-                    align="center"
-                    gap={8}
+                    direction={{ base: 'column', md: index % 2 === 0 ? 'row' : 'row-reverse' }}
+                    align={{ base: 'stretch', md: 'center' }}
+                    gap={{ base: 4, md: 0 }}
                     position="relative"
                   >
-                    <Box flex={1} display={{ base: 'none', md: 'block' }} />
+                    {/* Card Container - Left or Right side */}
                     <Box
                       flex={1}
-                      position="relative"
-                      zIndex={2}
+                      pr={{ base: 0, md: index % 2 === 0 ? 12 : 0 }}
+                      pl={{ base: 0, md: index % 2 === 0 ? 0 : 12 }}
                     >
                       <Card
                         bg={cardBg}
                         shadow="lg"
                         _hover={{ shadow: 'xl', transform: 'scale(1.02)' }}
                         transition="all 0.3s"
-                        borderLeft={{ base: '4px', md: 'none' }}
-                        borderLeftColor="pink.500"
-                        borderTop={{ base: 'none', md: '4px' }}
+                        borderTop="4px"
                         borderTopColor="pink.500"
                       >
-                        <CardBody p={8}>
-                          <HStack spacing={4} mb={4}>
+                        <CardBody p={6}>
+                          <HStack spacing={4} align="start">
+                            {/* Icon inside card for mobile, hidden on desktop */}
                             <Box
+                              display={{ base: 'flex', md: 'none' }}
                               bg="pink.500"
                               color="white"
                               p={3}
-                              rounded="lg"
+                              rounded="full"
+                              flexShrink={0}
                             >
-                              <Icon as={step.icon} w={6} h={6} />
+                              <Icon as={step.icon} w={5} h={5} />
                             </Box>
-                            <VStack align="start" spacing={0}>
-                              <Badge colorScheme="pink" fontSize="sm" mb={1}>
+                            <VStack align="start" spacing={2} flex={1}>
+                              <Badge colorScheme="pink" fontSize="sm">
                                 {step.year}
                               </Badge>
-                              <Heading as="h3" size="lg" color={useColorModeValue('gray.800', 'white')}>
+                              <Heading as="h3" size="md" color={useColorModeValue('gray.800', 'white')}>
                                 {step.title}
                               </Heading>
+                              <Text color={textColor} lineHeight="1.7" fontSize="sm">
+                                {step.description}
+                              </Text>
                             </VStack>
                           </HStack>
-                          <Text color={textColor} lineHeight="1.7">
-                            {step.description}
-                          </Text>
                         </CardBody>
                       </Card>
                     </Box>
+
+                    {/* Timeline Icon - Desktop only, centered on timeline */}
                     <Box
                       position="absolute"
-                      left={{ base: '20px', md: '50%' }}
-                      transform={{ base: 'translateX(-50%)', md: 'translateX(-50%)' }}
-                      w="40px"
-                      h="40px"
+                      left="50%"
+                      top="50%"
+                      transform="translate(-50%, -50%)"
+                      w="48px"
+                      h="48px"
                       bg="pink.500"
                       rounded="full"
                       border="4px solid"
                       borderColor={bgColor}
                       zIndex={3}
-                      display="flex"
+                      display={{ base: 'none', md: 'flex' }}
                       alignItems="center"
                       justifyContent="center"
+                      shadow="lg"
                     >
-                      <Icon as={step.icon} color="white" w={4} h={4} />
+                      <Icon as={step.icon} color="white" w={5} h={5} />
                     </Box>
+
+                    {/* Empty space for the other side - Desktop only */}
                     <Box flex={1} display={{ base: 'none', md: 'block' }} />
                   </Flex>
                 ))}
               </VStack>
             </Box>
-          </VStack>
-        </Container>
-      </Box>
-
-      {/* Values - Alternating Layout */}
-      <Box py={20} bg={useColorModeValue('gray.50', 'gray.900')}>
-        <Container maxW="container.xl">
-          <VStack spacing={16}>
-            <VStack spacing={4} textAlign="center" maxW="2xl" mx="auto">
-              <Heading size="2xl" color={useColorModeValue('gray.800', 'white')}>
-                What Guides Us
-              </Heading>
-              <Text fontSize="lg" color={textColor}>
-                These principles shape every interaction, every program, and every connection we make.
-              </Text>
-            </VStack>
-
-            <VStack spacing={12} w="full">
-              {values.map((value, index) => (
-                <Flex
-                  key={index}
-                  direction={{ base: 'column', md: value.position === 'left' ? 'row' : 'row-reverse' }}
-                  align="center"
-                  gap={8}
-                  w="full"
-                >
-                  <Box flex={1}>
-                    <Card
-                      bg={bgColor}
-                      shadow="xl"
-                      h="full"
-                      borderTop="4px"
-                      borderTopColor={`${value.color}.500`}
-                      _hover={{ transform: 'translateY(-4px)', shadow: '2xl' }}
-                      transition="all 0.3s"
-                    >
-                      <CardBody p={10}>
-                        <VStack spacing={6} align="start">
-                          <Box
-                            bg={`${value.color}.100`}
-                            p={4}
-                            rounded="xl"
-                            display="inline-block"
-                          >
-                            <Icon as={value.icon} w={10} h={10} color={`${value.color}.500`} />
-                          </Box>
-                          <Heading as="h3" size="xl" color={useColorModeValue('gray.800', 'white')}>
-                            {value.title}
-                          </Heading>
-                          <Text color={textColor} fontSize="lg" lineHeight="1.8">
-                            {value.description}
-                          </Text>
-                        </VStack>
-                      </CardBody>
-                    </Card>
-                  </Box>
-                  <Box
-                    flex={1}
-                    display={{ base: 'none', md: 'block' }}
-                    h="300px"
-                    bg={`${value.color}.50`}
-                    rounded="2xl"
-                    opacity={0.3}
-                  />
-                </Flex>
-              ))}
-            </VStack>
           </VStack>
         </Container>
       </Box>
@@ -431,7 +603,7 @@ export default function AboutPage() {
             >
               <Icon as={FaUsers} w={16} h={16} mb={4} opacity={0.9} />
               <Heading size="4xl" mb={2} fontWeight="900">
-                500+
+                70+
               </Heading>
               <Text fontSize="xl" opacity={0.95}>
                 Seniors Helped
@@ -467,7 +639,7 @@ export default function AboutPage() {
             >
               <Icon as={FaHeart} w={16} h={16} mb={4} opacity={0.9} />
               <Heading size="4xl" mb={2} fontWeight="900">
-                300+
+                40+
               </Heading>
               <Text fontSize="xl" opacity={0.95}>
                 Success Stories

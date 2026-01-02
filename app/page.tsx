@@ -10,18 +10,48 @@ import {
   Icon,
   VStack,
   HStack,
-  Image,
-  Flex,
   useColorModeValue,
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText,
   Avatar,
-  AvatarGroup,
+  chakra,
 } from '@chakra-ui/react'
 import { FaUsers, FaGraduationCap, FaVideo, FaComments, FaBook, FaCalendarAlt, FaHeart, FaHandshake, FaClock } from 'react-icons/fa'
 import Link from 'next/link'
+import { motion, isValidMotionProp } from 'framer-motion'
+
+// Create motion components
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === 'children',
+})
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+}
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 }
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1
+    }
+  }
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1 }
+}
 
 export default function Home() {
   const bgColor = useColorModeValue('white', 'gray.800')
@@ -30,7 +60,7 @@ export default function Home() {
   const impactStats = [
     {
       label: 'Seniors Helped',
-      value: '500+',
+      value: '70+',
       icon: FaUsers,
     },
     {
@@ -40,23 +70,8 @@ export default function Home() {
     },
     {
       label: 'Success Stories',
-      value: '300+',
+      value: '40+',
       icon: FaHeart,
-    },
-  ]
-
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      role: 'Senior Citizen',
-      image: '/testimonials/sarah.jpg',
-      quote: "Thanks to Roots and Wings, I can now video chat with my grandchildren and manage my finances online with confidence.",
-    },
-    {
-      name: 'Michael Chen',
-      role: 'Student Volunteer',
-      image: '/testimonials/michael.jpg',
-      quote: "Volunteering here has been incredibly rewarding. The impact we make on seniors' lives is truly meaningful.",
     },
   ]
 
@@ -98,74 +113,109 @@ export default function Home() {
         <Container maxW="container.xl" position="relative" zIndex="1">
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={16} alignItems="center">
             {/* Left side - Text content */}
-            <VStack align="start" spacing={8} maxW="500px">
+            <MotionBox
+              as={VStack}
+              align="start"
+              spacing={8}
+              maxW="500px"
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+            >
               <VStack align="start" spacing={4}>
-                <Heading 
-                  as="h1" 
-                  size="3xl" 
-                  fontWeight="800"
-                  lineHeight="1.1"
-                  color={useColorModeValue('gray.800', 'white')}
+                <MotionBox
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  Technology Made
-                  <Text as="span" color="orange.500" display="block">
-                    Simple & Friendly
+                  <Heading 
+                    as="h1" 
+                    size="3xl" 
+                    fontWeight="800"
+                    lineHeight="1.1"
+                    color={useColorModeValue('gray.800', 'white')}
+                  >
+                    Technology Made
+                    <Text as="span" color="orange.500" display="block">
+                      Simple & Friendly
+                    </Text>
+                  </Heading>
+                </MotionBox>
+                <MotionBox
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                >
+                  <Text 
+                    fontSize="xl" 
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                    fontWeight="400"
+                    lineHeight="1.5"
+                  >
+                    At Roots and Wings, seniors share the roots of wisdom while youth volunteers bring the wings that make personalized tech support take flight.
                   </Text>
-                </Heading>
-                <Text 
-                  fontSize="xl" 
-                  color={useColorModeValue('gray.600', 'gray.300')}
-                  fontWeight="400"
-                  lineHeight="1.5"
-                >
-                  At Roots and Wings, seniors share the roots of wisdom while youth volunteers bring the wings that make personalized tech support take flight.
-                </Text>
+                </MotionBox>
               </VStack>
               
-              <Button
-                size="lg"
-                bg="orange.500"
-                color="white"
-                px={8}
-                py={6}
-                fontSize="lg"
-                fontWeight="600"
-                rounded="full"
-                shadow="lg"
-                _hover={{
-                  bg: 'orange.600',
-                  transform: 'translateY(-2px)',
-                  shadow: 'xl',
-                }}
-                _active={{
-                  transform: 'translateY(0)',
-                }}
-                transition="all 0.2s"
-                as={Link}
-                href="/register"
+              <MotionBox
+                variants={fadeInUp}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
               >
-                Start Learning Today
-              </Button>
+                <Button
+                  size="lg"
+                  bg="orange.500"
+                  color="white"
+                  px={8}
+                  py={6}
+                  fontSize="lg"
+                  fontWeight="600"
+                  rounded="full"
+                  shadow="lg"
+                  _hover={{
+                    bg: 'orange.600',
+                    transform: 'translateY(-2px)',
+                    shadow: 'xl',
+                  }}
+                  _active={{
+                    transform: 'translateY(0)',
+                  }}
+                  transition="all 0.2s"
+                  as={Link}
+                  href="/register"
+                >
+                  Start Learning Today
+                </Button>
+              </MotionBox>
               
               {/* Trust indicators */}
-              <HStack spacing={6} pt={4}>
-                <HStack spacing={2}>
-                  <Icon as={FaUsers} color="orange.500" />
-                  <Text fontSize="sm" color={textColor} fontWeight="500">
-                    500+ seniors helped
-                  </Text>
+              <MotionBox
+                variants={fadeInUp}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+              >
+                <HStack spacing={6} pt={4}>
+                  <HStack spacing={2}>
+                    <Icon as={FaUsers} color="orange.500" />
+                    <Text fontSize="sm" color={textColor} fontWeight="500">
+                      70+ seniors helped
+                    </Text>
+                  </HStack>
+                  <HStack spacing={2}>
+                    <Icon as={FaHeart} color="orange.500" />
+                    <Text fontSize="sm" color={textColor} fontWeight="500">
+                      100% free
+                    </Text>
+                  </HStack>
                 </HStack>
-                <HStack spacing={2}>
-                  <Icon as={FaHeart} color="orange.500" />
-                  <Text fontSize="sm" color={textColor} fontWeight="500">
-                    100% free
-                  </Text>
-                </HStack>
-              </HStack>
-            </VStack>
+              </MotionBox>
+            </MotionBox>
             
             {/* Right side - Illustration/Image */}
-            <Box position="relative" display={{ base: 'none', lg: 'block' }}>
+            <MotionBox
+              position="relative"
+              display={{ base: 'none', lg: 'block' }}
+              initial="hidden"
+              animate="visible"
+              variants={scaleIn}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            >
               <Box
                 bg="white"
                 rounded="2xl"
@@ -228,7 +278,7 @@ export default function Home() {
               >
                 <Icon as={FaGraduationCap} boxSize={5} />
               </Box>
-            </Box>
+            </MotionBox>
           </SimpleGrid>
         </Container>
       </Box>
@@ -236,15 +286,26 @@ export default function Home() {
       {/* Impact Stats */}
       <Box py={16} bg={useColorModeValue('white', 'gray.800')}>
         <Container maxW="container.xl">
-          <VStack spacing={12}>
-            <Heading size="lg" textAlign="center" color={textColor}>
-              Trusted by seniors nationwide
-            </Heading>
+          <MotionBox
+            as={VStack}
+            spacing={12}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+          >
+            <MotionBox variants={fadeInUp} transition={{ duration: 0.6 }}>
+              <Heading size="lg" textAlign="center" color={textColor}>
+                Trusted by seniors nationwide
+              </Heading>
+            </MotionBox>
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
               {impactStats.map((stat, index) => (
-                <Box
+                <MotionBox
                   key={index}
                   textAlign="center"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
                 >
                   <Icon as={stat.icon} w={8} h={8} color="orange.500" mb={4} />
                   <Stat>
@@ -253,33 +314,38 @@ export default function Home() {
                     </StatNumber>
                     <StatLabel fontSize="lg" color={textColor}>{stat.label}</StatLabel>
                   </Stat>
-                </Box>
+                </MotionBox>
               ))}
             </SimpleGrid>
-          </VStack>
+          </MotionBox>
         </Container>
       </Box>
 
       {/* Mission Section */}
       <Box py={16} bg={useColorModeValue('gray.50', 'gray.900')}>
-        <Container maxW="container.xl">
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} alignItems="center">
-            <Box>
-              <Image
-                src="/mission-image.jpg"
-                alt="Senior citizen learning technology"
-                rounded="xl"
-                shadow="xl"
-              />
-            </Box>
-            <VStack align="start" spacing={6}>
+        <Container maxW="container.lg">
+          <MotionBox
+            as={VStack}
+            align="center"
+            spacing={6}
+            textAlign="center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+          >
+            <MotionBox variants={fadeInUp} transition={{ duration: 0.6 }}>
               <Heading size="xl" color={useColorModeValue('gray.800', 'white')}>
                 Learning shouldn't stop at any age
               </Heading>
-              <Text fontSize="lg" color={textColor} lineHeight="1.7">
+            </MotionBox>
+            <MotionBox variants={fadeInUp} transition={{ duration: 0.6, delay: 0.1 }}>
+              <Text fontSize="lg" color={textColor} lineHeight="1.7" maxW="2xl">
                 We connect seniors with patient, trained student volunteers who provide 
                 one-on-one technology support in a comfortable, judgment-free environment.
               </Text>
+            </MotionBox>
+            <MotionBox variants={fadeInUp} transition={{ duration: 0.6, delay: 0.2 }}>
               <Button
                 as={Link}
                 href="/about"
@@ -290,81 +356,62 @@ export default function Home() {
               >
                 Our Story
               </Button>
-            </VStack>
-          </SimpleGrid>
-        </Container>
-      </Box>
-
-      {/* Testimonials */}
-      <Box py={16} bg={useColorModeValue('white', 'gray.800')}>
-        <Container maxW="container.xl">
-          <VStack spacing={12}>
-            <Heading size="xl" textAlign="center" color={useColorModeValue('gray.800', 'white')}>
-              Real stories from our community
-            </Heading>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-              {testimonials.map((testimonial, index) => (
-                <Box
-                  key={index}
-                  p={8}
-                  bg={bgColor}
-                  rounded="xl"
-                  shadow="lg"
-                  borderTop="4px"
-                  borderTopColor="orange.500"
-                >
-                  <VStack spacing={4} align="start">
-                    <Text fontSize="lg" fontStyle="italic" color={textColor}>
-                      "{testimonial.quote}"
-                    </Text>
-                    <HStack>
-                      <Avatar src={testimonial.image} size="md" />
-                      <Box>
-                        <Text fontWeight="bold" color={useColorModeValue('gray.800', 'white')}>
-                          {testimonial.name}
-                        </Text>
-                        <Text color={textColor} fontSize="sm">{testimonial.role}</Text>
-                      </Box>
-                    </HStack>
-                  </VStack>
-                </Box>
-              ))}
-            </SimpleGrid>
-          </VStack>
+            </MotionBox>
+          </MotionBox>
         </Container>
       </Box>
 
       {/* Call to Action */}
       <Box py={20} bg="orange.500">
         <Container maxW="container.xl">
-          <VStack spacing={8} align="center" textAlign="center">
-            <Heading size="xl" color="white">
-              Ready to get started?
-            </Heading>
-            <Text fontSize="lg" color="orange.100" maxW="2xl">
-              Join our welcoming community of learners and volunteers. 
-              Technology support is just a click away.
-            </Text>
-            <Button
-              size="lg"
-              bg="white"
-              color="orange.500"
-              px={8}
-              py={6}
-              fontSize="lg"
-              fontWeight="600"
-              rounded="full"
-              shadow="lg"
-              _hover={{
-                transform: 'translateY(-2px)',
-                shadow: 'xl',
-              }}
-              as={Link}
-              href="/register"
+          <MotionBox
+            as={VStack}
+            spacing={8}
+            align="center"
+            textAlign="center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+          >
+            <MotionBox variants={fadeInUp} transition={{ duration: 0.6 }}>
+              <Heading size="xl" color="white">
+                Ready to get started?
+              </Heading>
+            </MotionBox>
+            <MotionBox variants={fadeInUp} transition={{ duration: 0.6, delay: 0.1 }}>
+              <Text fontSize="lg" color="orange.100" maxW="2xl">
+                Join our welcoming community of learners and volunteers. 
+                Technology support is just a click away.
+              </Text>
+            </MotionBox>
+            <MotionBox
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
             >
-              Join Our Community
-            </Button>
-          </VStack>
+              <Button
+                size="lg"
+                bg="white"
+                color="orange.500"
+                px={8}
+                py={6}
+                fontSize="lg"
+                fontWeight="600"
+                rounded="full"
+                shadow="lg"
+                _hover={{
+                  transform: 'translateY(-2px)',
+                  shadow: 'xl',
+                }}
+                as={Link}
+                href="/register"
+              >
+                Join Our Community
+              </Button>
+            </MotionBox>
+          </MotionBox>
         </Container>
       </Box>
     </Box>

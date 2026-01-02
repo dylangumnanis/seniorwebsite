@@ -231,7 +231,7 @@ export default function TechLiteracyPage() {
                   <Icon as={FaUsers} w={10} h={10} color="orange.500" />
                   <Box>
                     <Text fontSize="2xl" fontWeight="bold" color={useColorModeValue('gray.800', 'white')}>
-                      500+
+                      70+
                     </Text>
                     <Text color={textColor}>Seniors Helped</Text>
                   </Box>

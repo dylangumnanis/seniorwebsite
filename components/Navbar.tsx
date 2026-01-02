@@ -22,7 +22,7 @@ import {
   Badge,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import { FaHeart, FaUsers, FaGraduationCap, FaCog, FaSignOutAlt, FaTachometerAlt, FaCalendarAlt, FaQuestionCircle } from 'react-icons/fa'
+import { FaHeart, FaUsers, FaCog, FaSignOutAlt, FaTachometerAlt, FaCalendarAlt, FaQuestionCircle } from 'react-icons/fa'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -30,9 +30,11 @@ import { useRouter } from 'next/navigation'
 interface NavLinkProps {
   children: React.ReactNode
   href: string
+  linkColor: string
+  linkHoverColor: string
 }
 
-const NavLink = ({ children, href }: NavLinkProps) => (
+const NavLink = ({ children, href, linkColor, linkHoverColor }: NavLinkProps) => (
   <Box
     as={Link}
     href={href}
@@ -41,10 +43,10 @@ const NavLink = ({ children, href }: NavLinkProps) => (
     rounded="md"
     fontSize="md"
     fontWeight="500"
-    color={useColorModeValue('gray.700', 'gray.200')}
+    color={linkColor}
     _hover={{
       textDecoration: 'none',
-      color: useColorModeValue('orange.600', 'orange.300'),
+      color: linkHoverColor,
       transform: 'translateY(-1px)',
     }}
     transition="all 0.2s"
@@ -57,8 +59,15 @@ export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { data: session, status } = useSession()
   const router = useRouter()
+  
+  // Move ALL useColorModeValue calls to the top to ensure consistent hook order
   const bgColor = useColorModeValue('white', 'gray.800')
   const borderColor = useColorModeValue('gray.200', 'gray.700')
+  const navBgColor = useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(26, 32, 44, 0.8)')
+  const textColor = useColorModeValue('gray.800', 'white')
+  const subtitleColor = useColorModeValue('gray.500', 'gray.400')
+  const linkColor = useColorModeValue('gray.700', 'gray.200')
+  const linkHoverColor = useColorModeValue('orange.600', 'orange.300')
 
   const handleSignOut = async () => {
     await signOut({ redirect: false })
@@ -85,7 +94,7 @@ export default function Navbar() {
       w="100%"
       zIndex="1000"
       backdropFilter="blur(10px)"
-      backgroundColor={useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(26, 32, 44, 0.8)')}
+      backgroundColor={navBgColor}
     >
       <Container maxW="container.xl">
         <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -107,14 +116,14 @@ export default function Navbar() {
                 <Text
                   fontSize="lg"
                   fontWeight="800"
-                  color={useColorModeValue('gray.800', 'white')}
+                  color={textColor}
                   lineHeight="1"
                 >
                   Roots and Wings
                 </Text>
                 <Text
                   fontSize="xs"
-                  color={useColorModeValue('gray.500', 'gray.400')}
+                  color={subtitleColor}
                   lineHeight="1"
                 >
                   rooted in wisdom, soaring together
@@ -132,9 +141,9 @@ export default function Navbar() {
                 rightIcon={<ChevronDownIcon />}
                 fontSize="md"
                 fontWeight="500"
-                color={useColorModeValue('gray.700', 'gray.200')}
+                color={linkColor}
                 _hover={{
-                  color: useColorModeValue('orange.600', 'orange.300'),
+                  color: linkHoverColor,
                 }}
               >
                 Volunteer
@@ -159,9 +168,9 @@ export default function Navbar() {
                 rightIcon={<ChevronDownIcon />}
                 fontSize="md"
                 fontWeight="500"
-                color={useColorModeValue('gray.700', 'gray.200')}
+                color={linkColor}
                 _hover={{
-                  color: useColorModeValue('orange.600', 'orange.300'),
+                  color: linkHoverColor,
                 }}
               >
                 Programs
@@ -182,9 +191,9 @@ export default function Navbar() {
               </MenuList>
             </Menu>
 
-            <NavLink href="/about">About Us</NavLink>
-            <NavLink href="/contact">Contact</NavLink>
-            <NavLink href="/forum">Forum</NavLink>
+            <NavLink href="/about" linkColor={linkColor} linkHoverColor={linkHoverColor}>About Us</NavLink>
+            <NavLink href="/contact" linkColor={linkColor} linkHoverColor={linkHoverColor}>Contact</NavLink>
+            <NavLink href="/forum" linkColor={linkColor} linkHoverColor={linkHoverColor}>Forum</NavLink>
             
             <Button
               as={Link}
@@ -220,7 +229,7 @@ export default function Navbar() {
                       <Text 
                         fontSize="sm" 
                         fontWeight="600"
-                        color={useColorModeValue('gray.800', 'white')}
+                        color={textColor}
                       >
                         {session.user?.name || 'User'}
                       </Text>
@@ -285,9 +294,9 @@ export default function Navbar() {
                   variant="ghost"
                   size="md"
                   fontWeight="500"
-                  color={useColorModeValue('gray.700', 'gray.200')}
+                  color={linkColor}
                   _hover={{
-                    color: useColorModeValue('orange.600', 'orange.300'),
+                    color: linkHoverColor,
                   }}
                 >
                   Log In
@@ -332,35 +341,35 @@ export default function Navbar() {
           <Box pb={4} display={{ lg: 'none' }}>
             <Stack as="nav" spacing={4}>
               <VStack align="start" spacing={2}>
-                <Text fontWeight="600" color={useColorModeValue('gray.800', 'white')} fontSize="sm">
+                <Text fontWeight="600" color={textColor} fontSize="sm">
                   VOLUNTEER
                 </Text>
                 <Box pl={4}>
                   <VStack align="start" spacing={1}>
-                    <NavLink href="/volunteer/become">Become a Volunteer</NavLink>
-                    <NavLink href="/volunteer/training">Training Program</NavLink>
-                    <NavLink href="/volunteer/schedule">Schedule Sessions</NavLink>
+                    <NavLink href="/volunteer/become" linkColor={linkColor} linkHoverColor={linkHoverColor}>Become a Volunteer</NavLink>
+                    <NavLink href="/volunteer/training" linkColor={linkColor} linkHoverColor={linkHoverColor}>Training Program</NavLink>
+                    <NavLink href="/volunteer/schedule" linkColor={linkColor} linkHoverColor={linkHoverColor}>Schedule Sessions</NavLink>
                   </VStack>
                 </Box>
               </VStack>
 
               <VStack align="start" spacing={2}>
-                <Text fontWeight="600" color={useColorModeValue('gray.800', 'white')} fontSize="sm">
+                <Text fontWeight="600" color={textColor} fontSize="sm">
                   PROGRAMS
                 </Text>
                 <Box pl={4}>
                   <VStack align="start" spacing={1}>
-                    <NavLink href="/programs/tech-literacy">Technology Literacy</NavLink>
-                    <NavLink href="/programs/financial-literacy">Financial Literacy</NavLink>
-                    <NavLink href="/programs/webinars">Live Webinars</NavLink>
-                    <NavLink href="/programs/workshops">Workshops</NavLink>
+                    <NavLink href="/programs/tech-literacy" linkColor={linkColor} linkHoverColor={linkHoverColor}>Technology Literacy</NavLink>
+                    <NavLink href="/programs/financial-literacy" linkColor={linkColor} linkHoverColor={linkHoverColor}>Financial Literacy</NavLink>
+                    <NavLink href="/programs/webinars" linkColor={linkColor} linkHoverColor={linkHoverColor}>Live Webinars</NavLink>
+                    <NavLink href="/programs/workshops" linkColor={linkColor} linkHoverColor={linkHoverColor}>Workshops</NavLink>
                   </VStack>
                 </Box>
               </VStack>
 
-              <NavLink href="/about">About Us</NavLink>
-              <NavLink href="/contact">Contact</NavLink>
-              <NavLink href="/forum">Forum</NavLink>
+              <NavLink href="/about" linkColor={linkColor} linkHoverColor={linkHoverColor}>About Us</NavLink>
+              <NavLink href="/contact" linkColor={linkColor} linkHoverColor={linkHoverColor}>Contact</NavLink>
+              <NavLink href="/forum" linkColor={linkColor} linkHoverColor={linkHoverColor}>Forum</NavLink>
               
               <Button
                 as={Link}

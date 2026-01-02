@@ -24,7 +24,6 @@ import {
 import { 
   FaEnvelope, 
   FaPhone, 
-  FaMapMarkerAlt, 
   FaClock,
   FaComments,
   FaPaperPlane,
@@ -86,22 +85,15 @@ export default function ContactPage() {
       icon: FaEnvelope,
       title: 'Email Us',
       description: 'Send us an email anytime',
-      value: 'info@rootsandwings.org',
+      value: 'dgumnani@gmail.com',
       color: 'orange',
     },
     {
       icon: FaPhone,
       title: 'Call Us',
       description: 'Monday - Friday, 9am - 5pm',
-      value: '(555) 123-4567',
+      value: '(201) 893-6220',
       color: 'blue',
-    },
-    {
-      icon: FaMapMarkerAlt,
-      title: 'Visit Us',
-      description: 'Stop by our office',
-      value: '123 Community Center St, City, ST 12345',
-      color: 'green',
     },
     {
       icon: FaClock,
@@ -182,7 +174,7 @@ export default function ContactPage() {
                 Choose the method that works best for you. We're available through multiple channels.
               </Text>
             </VStack>
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
+            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
               {contactMethods.map((method, index) => (
                 <Card
                   key={index}
