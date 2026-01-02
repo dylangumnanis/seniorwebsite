@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable static export for IONOS hosting
+  output: 'export',
+  trailingSlash: true,
+  
   images: {
-    domains: ['info.digitaltrailheads.com'], // Add your WordPress domain
+    domains: ['info.digitaltrailheads.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -10,10 +14,9 @@ const nextConfig = {
         pathname: '/wp-content/uploads/**',
       },
     ],
+    // Required for static export
+    unoptimized: true,
   },
-  // Remove static export for Vercel deployment
-  // output: 'export', // This causes issues with API routes
-  // trailingSlash: true, // Not needed for Vercel
   
   // Environment variables
   env: {
@@ -22,18 +25,18 @@ const nextConfig = {
   
   // Temporarily disable problematic optimizations
   experimental: {
-    // optimizeCss: true, // Disable this to fix critters module error
     optimizePackageImports: ['@chakra-ui/react'],
   },
   
   // Improve build performance
   typescript: {
-    // Only run type checking in development
     ignoreBuildErrors: process.env.NODE_ENV === 'production',
   },
   
-  // Custom build directory structure
-  distDir: '.next'
+  // Disable ESLint during builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig 

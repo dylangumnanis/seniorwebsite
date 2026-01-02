@@ -1,16 +1,10 @@
-distFolder: .next
+distFolder: out
 setup:
   - name: Install dependencies
     command: npm ci
 
 build:
-  - name: Build Next.js app
+  - name: Build Next.js static site
     command: npm run build
-
-runtime:
-  name: Node.js
-  version: '18'
-  startCommand: npm start
-  port: 3000
 
 
