@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static export for IONOS hosting
-  output: 'export',
-  trailingSlash: true,
-  
   images: {
     domains: ['info.digitaltrailheads.com'],
     remotePatterns: [
@@ -14,8 +10,6 @@ const nextConfig = {
         pathname: '/wp-content/uploads/**',
       },
     ],
-    // Required for static export
-    unoptimized: true,
   },
   
   // Environment variables
@@ -23,17 +17,16 @@ const nextConfig = {
     CUSTOM_NAME: process.env.CUSTOM_NAME,
   },
   
-  // Temporarily disable problematic optimizations
+  // Optimizations
   experimental: {
     optimizePackageImports: ['@chakra-ui/react'],
   },
   
-  // Improve build performance
+  // Build settings
   typescript: {
     ignoreBuildErrors: process.env.NODE_ENV === 'production',
   },
   
-  // Disable ESLint during builds
   eslint: {
     ignoreDuringBuilds: true,
   },
