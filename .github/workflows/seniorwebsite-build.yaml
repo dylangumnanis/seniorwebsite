@@ -1,0 +1,57 @@
+# To better understand this file read this:
+# https://docs.ionos.space/docs/github-actions-customization/
+
+name: "Deploy Now: Execute Build"
+
+on:
+  workflow_call:
+    inputs:
+      site-url:
+        required: true
+        type: string
+      branch-id:
+        required: true
+        type: string
+
+env:
+  DEPLOYMENT_FOLDER: .out
+
+jobs:
+# Please do not rename this job
+  build-project:
+    name: build seniorwebsite
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: v20.x
+
+      - name: Build Node assets
+        env:
+          CI: true
+          DATABASE_URL: postgresql://neondb_owner:npg_dpSJj27GuAzL@ep-lingering-sunset-a4k8nbdr-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+          NEXTAUTH_SECRET: k7Xp9mQwR2vL5nJ8hB4yT6cF3gA1sD0e
+          NEXTAUTH_URL: ${{ inputs.site-url }}
+          SITE_URL: ${{ inputs.site-url }}
+        run: |
+          npm ci
+          npm run build
+
+# Please do not touch the following action
+      - name: Store deployment content
+        uses: ionos-deploy-now/artifact-action@v1
+        with:
+          api-key: ${{ secrets.IONOS_API_KEY }}
+          service-host: api-us.ionos.space
+          project-id: b455f838-9a08-4d50-b0ef-8d477de9280e
+          branch-id: ${{ inputs.branch-id }}
+          version: ${{ github.sha }}
+          folder: ${{ env.DEPLOYMENT_FOLDER }}
+          config-file: .deploy-now/seniorwebsite/config.yaml
+          action: upload
