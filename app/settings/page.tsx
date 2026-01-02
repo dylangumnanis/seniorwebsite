@@ -25,7 +25,7 @@ import {
   Badge,
   SimpleGrid,
 } from '@chakra-ui/react'
-import { FaSave, FaUser, FaBell, FaShield, FaTrash } from 'react-icons/fa'
+import { FaSave, FaUser, FaBell, FaShieldAlt, FaTrash } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -310,7 +310,7 @@ export default function SettingsPage() {
           <Card bg={cardBg}>
             <CardHeader>
               <HStack>
-                <FaShield />
+                <FaShieldAlt />
                 <Heading size="md">Security & Privacy</Heading>
               </HStack>
             </CardHeader>
