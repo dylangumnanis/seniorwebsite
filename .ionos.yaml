@@ -1,0 +1,16 @@
+distFolder: .next
+setup:
+  - name: Install dependencies
+    command: npm ci
+
+build:
+  - name: Build Next.js app
+    command: npm run build
+
+runtime:
+  name: Node.js
+  version: '18'
+  startCommand: npm start
+  port: 3000
+
+
